@@ -12,7 +12,7 @@ type navObject = {
 
 const BreadCrumb = ({ nav }: Props) => {
   return (
-    <Breadcrumb style={{ marginBottom: 50 }}>
+    <Breadcrumb style={{ marginBottom: 50 }} data-testid='breadcrumb'>
       {nav?.length && nav.map((item, i) =>
         <Breadcrumb.Item key={i}>
           <a href={item?.to}>{item?.name}</a>

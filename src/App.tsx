@@ -102,14 +102,14 @@ const Title = ({ children }: TitleProps) => <h2>{children}</h2>
 const ActionControl = ({ params, handleFilterSearch, handleChangeSearch, handleFilterGender, handleResetFilters }: ActionProps) => {
   return (
     <div className='action'>
-      <div><label htmlFor="">Search</label><Search value={params.keyword} placeholder="Search..." onSearch={handleFilterSearch} onChange={handleChangeSearch} enterButton /></div>
+      <div><label htmlFor="">Search</label><Search data-testid='filter-keyword' value={params.keyword} placeholder="Search..." onSearch={handleFilterSearch} onChange={handleChangeSearch} enterButton /></div>
       <div style={{ display: 'flex', flexDirection: 'column' }}><label htmlFor="">Gender</label>
-      <Select defaultValue={params.gender} value={params.gender} onChange={handleFilterGender} style={{ width: 200 }}>
-        <Option value="all">All</Option>
-        <Option value="male">Male</Option>
-        <Option value="female">Female</Option>
+      <Select data-testid='filter-gender' defaultValue={params.gender} value={params.gender} onChange={handleFilterGender} style={{ width: 200 }}>
+        <Option data-testid='select-gender-option' value="all">All</Option>
+        <Option data-testid='select-gender-option' value="male">Male</Option>
+        <Option data-testid='select-gender-option' value="female">Female</Option>
       </Select></div>
-      <div><label htmlFor=""></label><Button onClick={handleResetFilters}>Reset Filter</Button></div>
+      <div><label htmlFor=""></label><Button data-testid='button-reset-filter' onClick={handleResetFilters}>Reset Filter</Button></div>
     </div>
   )
 }
@@ -165,8 +165,6 @@ function App() {
       activeParams.keyword = keyword
     }
 
-    console.log(activeParams);
-
     try {
       const { status, data: { results: resultsList } } = await axios.get(`https://randomuser.me/api`, {
         params: { ...activeParams }
@@ -175,7 +173,6 @@ function App() {
         setIsLoading(false)
         const remap = resultsList.map(({ gender, name, email, login, registered }: DataType) => ({ gender, name, email, username: login, registered }))
         setData(remap)
-        console.log((results / pageSize) * results);
         setParams({
           ...params,
           total: (results / pageSize) * results,
@@ -281,8 +278,8 @@ function App() {
           handleFilterGender={handleFilterGender}
           handleResetFilters={handleResetFilters}
         />
-        <Table columns={columns} loading={isLoading} dataSource={data} key='email' rowKey='email' pagination={false} />
-        <Pagination current={params.page} total={params.total} onChange={go} disabled={isLoading} />
+        <Table data-testid='table-data' columns={columns} loading={isLoading} dataSource={data} key='email' rowKey='email' pagination={false} />
+        <Pagination data-testid='table-pagination' current={params.page} total={params.total} onChange={go} disabled={isLoading} />
       </Content>
     </Layout>
   );
