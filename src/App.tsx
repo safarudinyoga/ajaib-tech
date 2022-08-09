@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Layout, Input, Button, Table, message, Select, Pagination } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './app.sass';
