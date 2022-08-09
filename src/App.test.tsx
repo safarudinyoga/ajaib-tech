@@ -65,6 +65,10 @@ test('should action gender filter able to change', () => {
     </Router>,
   );
 
+  function hasInputValue(e: TestElement, inputValue: string) {
+    return screen.getByDisplayValue(inputValue) === e
+  }
+
   const input = screen.getByTestId("select-gender-option")
 
   fireEvent.change(input, { target: { value: 'male' } })
